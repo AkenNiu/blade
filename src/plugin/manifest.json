@@ -1,0 +1,85 @@
+{
+  "name": "Sketch Plugin Boilerplate",
+  "identifier": "com.julianburr.sketch-boilerplate",
+  "description": "This is just a simple development boilerplate for sketch plugins!",
+  "authorEmail": "julian.burr@rexsoftware.com",
+  "author": "Julian Burr",
+  "disableCocoaScriptPreprocessor": false,
+  "commands": [
+    {
+      "script": "plugin.js",
+      "handler": "helloWorld",
+      "name": "Hello World",
+      "identifier": "helloWorld"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "openWindow",
+      "name": "Open Window",
+      "identifier": "openWindow"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "togglePanel",
+      "name": "Toggle Panel",
+      "identifier": "togglePanel"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "handleBridgeMessage",
+      "name": "Handle Bridge Message",
+      "identifier": "handleBridgeMessage"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "sendMessageToWindow",
+      "name": "Send Bridge Message",
+      "identifier": "sendMessageToWindow"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "sendMessageToPanel",
+      "name": "Send Bridge Message",
+      "identifier": "sendMessageToPanel"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "sendRequest",
+      "name": "Send HTTP Request",
+      "identifier": "sendRequest"
+    },
+    {
+      "script": "plugin.js",
+      "handler": "handleHttpResponse",
+      "name": "Handle HTTP Response",
+      "identifier": "handleHttpResponse"
+    }
+  ],
+  "menu": {
+    "isRoot": 1,
+    "items": [
+      {
+        "title": "Sketch Plugin Boilerplate",
+        "items": [
+          "helloWorld",
+          "sendRequest",
+          "-",
+          {
+            "title": "Window",
+            "items": [
+              "openWindow",
+              "sendMessageToWindow"
+            ]
+          },
+          {
+            "title": "Panel",
+            "items": [
+              "togglePanel",
+              "sendMessageToPanel"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

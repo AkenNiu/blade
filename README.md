@@ -1,73 +1,104 @@
-Blade  V0.0.1
-==============
 
-Blade is a Sketch 3 plugin for automatically HTML generating. It will generate tag `<div>` for group, tag `<p>` for text , etc.
+![Image](http://dev.burrdesign.de/sketch-plugin-boilerplate-logo-20170702.svg)
+ 
+<br>
+<br>
 
-##Notice##
+# Sketch Plugin Boilerplate
 
- - This plugin works for **latest Sketch beta or version above 3.0.3(7882)** !!!.
- - This version is more stable now, but may still have problem with mega size sketch file.
- - Please group all you layer in one group and place it at coordinate (0,0) as the demo shows. - It does not work with artboard for now.
+The Sketch Plugin Boilerplate is targeted at JS Developers, who want to create awesome plugins for [Sketch](https://sketchapp.com), but don't want to have to go through all the Obj C frustrations to be able to do more complex stuff, like building GUIs, handling HTTP requests, etc.
 
+I tried to use as little Obj C as possible, again, this is supposed to be a helpful starting point for JS developers.
 
-##Quick start##
+<br>
 
+> This is meant as a starting point, so clone the repo, modify anything and everything to your needs and build an awesome Sketch plugin
 
- - Clone or download the repo.
- - Place everything in `dist` folder into your sketch plugin folder.[Where are sketch plugins?](http://bohemiancoding.com/sketch/support/developer/01-introduction/01.html)
- - Group all your layer in one group and run blade.
- - Blade will generate a new folder just in the same folder in which you put your sketch file.
+<br>
 
+## Why
+Sketch is awesome. And they provided us an awesome API to develop plugins. But as a JS Developer, there are still many things that are quiet hard to achieve. The main problem I keep hearing of is the ability to build custom user interfaces (GUIs), which requires some knowledge of how web views work in Obj C, how you can communicate with them and then **a lot of** boilerplate.
 
-
-##Amazing features##
-
-I uploaded a demo sketch file and the generated HTML files which shows some magic. Have a quick look here:
-
-###1. My sketch file:
-
-<img width= "100%" src = "https://raw.githubusercontent.com/sskyy/blade/master/demo/1.png"/>
-
-You may notice the special layer names such as `[btn]` or `input[text]`. `[***]` is what I called `directive`, similar to AngularJS's directive. The directive will tell blade what kind of dom element should be generate or this layer. And some powerful directives may generate scripts to make element interactive.
+This repo should make it easier and faster to start new projects :)
 
 
-###2. The Generated HTML:
+## Getting started
 
-<img  width= "100%" src = "https://raw.githubusercontent.com/sskyy/blade/master/demo/2.png"/>
+```bash
+# Change to plugin folder
+cd ~/Library/Application Support/com.bohemiancoding.sketch3/Plugins/
 
-As it shows, blade generate a input element for the layer which name is `input[text]` and a button for `[btn]`.
+# Clone repo (as .sketchplugin!)
+git clone https://github.com/julianburr/sketch-plugin-boilerplate.git sketch-plugin-boilerplate.sketchplugin
+cd sketch-plugin-boilerplate.sketchplugin
 
-###3. What does `[case]` do?:
+# Install dependecies
+yarn install
 
-<img  width= "100%" src = "https://raw.githubusercontent.com/sskyy/blade/master/demo/3.png"/>
+# ...and create a first build
+yarn build
+```
 
-Press `shift` key down on the web page, then you will see the green border and two tabs, each one was generated for the layer which has directive `[case]`. Click the tab(don't release the `shift` before click) then you can change which should show as below:
+... and you are ready to go :)
 
-<img  width= "100%" src = "https://raw.githubusercontent.com/sskyy/blade/master/demo/4.png"/>
 
-##What's next?##
+## Commands / Scripts
 
-build-in directives:
+```bash
+# Build and watch plugin (hot, no need to run build to see changes in Sketch!
+yarn start:plugin
 
- - [x] case
- - [x] btn
- - [x] center
- - [x] width
- - [x] height
- - [x] ignore
- - [x] a
- - [ ] checkbox
- - [ ] hover
- - [ ] alert
- - [ ] password
- - [ ] select
- - [ ] textarea
- - [ ] closeable
+# Build and watch webview(s) in browser
+yarn start:webview
 
-I will continue write magic tags for blade, and trying to integrate AngularJS to help build better prototype。
+# Compile webview into correct folder structure to use it in Sketch
+yarn build:webview
 
-##How to contribute?##
+# Run eslint --fix on the source directory
+yarn lint-fix
 
-- Install nodejs and [gulp](http://gulpjs.com/).
-- Enter into the repo folder and run `gulp`, then gulp will watch all the files in `src` and automatically build it into `dist` folder.
-- please feel free to contact me at any time if you have problem.
+# Run Jest tests (needs sketchtool installed locally)
+yarn test
+```
+
+For the rest, see `package.json`
+
+
+## Folder structure
+
+**Why is the folder structure as it is**
+
+The build structure follows [Sketch's guidelines](http://developer.sketchapp.com/introduction/plugin-bundles/) of how your plugin has to be structured. This makes development so much easier. All you have to do is to create the repo in your Sketch plugin folder (usually `~/Library/Application Support/com.bohemiancoding.sketch3/Plugins/`) and start coding. The watch and build scripts automatically put everything in the right place so you see the changes immediately in Sketch :)
+
+```bash
+└─── /__tests__ # Jest tests and assets (e.g. Sketch files, etc) that are used for test scenarios
+└─── /config # Here you will find all necessary configurations, feel free to adjust them to your needs! :)
+│
+└─── /Contents  # This is the build folder that Sketch reads
+│    └─── /Resources  # Put your stuff here
+│    └─── /Sketch  # plugin.js and manifest.json have to be here
+│    
+└─── /scripts  # The npm scripts, also feel free to change to your needs, this is a boilerplate, not an end product!
+│    └─── /plugin  # For `yarn *:plugin` scripts
+│    └─── /webview
+│    
+└─── /src  # Source code, split into the different parts of your plugin
+│    └─── /framework  # Any xcode frameworks that support your plugin
+│    └─── /plugin  # The plugins JS source code
+│    │    └─── index.js  # By default, this will be used to bundle your production plugin.js file
+│    └─── /webview  # The source for possible web views
+│    
+└─── package.json  # By default, the version of your package.json will be copied into the plugins manifest.json
+```
+
+## Documentation
+
+*In progress*
+
+## Roadmap / Todos
+
+ - [ ] Create useful documentation (integrated into a simple github.io page)
+ - [ ] Create tutorials for JS developers to get started with Sketch plugins
+ - [x] ~~Implement testing ([Jest](https://facebook.github.io/jest/)?)~~ *- Note: using [sketchtool](https://www.sketchapp.com/tool/) for accessing Sketch files and running plugin commands, however using own util functions, since the [node package](https://github.com/marekhrabe/sketchtool) does not seem to be maintained anymore (currently at version 39.x)*
+ - [ ] Migrate the webview build from webpack to rollup, so we only have one build system to care about
+ - [ ] Try to use WKUser​Content​Controller without the xcode framework (would get rid of one dependecy?!)
